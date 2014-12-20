@@ -3,6 +3,28 @@
 ## cacheSolve(x) returns the inverse of the matrix actually setted on x
 ## if inverse cached, then just returns cached value, else calculates and caches the inverse first
 ## x is the list of functions return by makeCacheMatrix
+##
+## Test Code
+## 1) create a 2x2 invertible matrix
+## > A <- matrix(c(1,2,2,3), 2, 2)
+##       [,1] [,2]
+## [1,]    1    2
+## [2,]    2    3
+##
+## 2) call makeCacheMatrix to get the special matrix
+## > X <- makeCacheMatrix(A)
+##
+## 3) call cacheSolve to get the inverse of the matrix
+## > inverse <- cacheSolve(X)
+##       [,1] [,2]
+## [1,]   -3    2
+## [2,]    2   -1
+##
+## 4) Test that the inverse is correct: A * inverse = I
+## > A %*% inverse
+##
+## 5) Call cacheSolve again should print the message "getting cached data"
+
 
 
 ## params
@@ -13,6 +35,9 @@
 ## -> get: returns the actual matrix
 ## -> setinverse(inverse): caches the inverse of the matrix
 ## -> getinverse: returns the cached matrix inverse
+##
+## example
+## > X <- makeCacheMatrix(matrix(c(1,2,2,3), 2, 2))
 makeCacheMatrix <- function(x = matrix()) {
         i <- NULL
         set <- function(y) {
@@ -34,6 +59,11 @@ makeCacheMatrix <- function(x = matrix()) {
 ##
 ## returns the inverse of the matrix. 
 ## If inverse was already calculated, then it returns the cached copy, and prints a notice message "getting cached data"
+##
+## example
+## > X <- makeCacheMatrix(matrix(c(1,2,2,3), 2, 2))
+## > inverse <- cacheSolve(X)
+## > matrix(c(1,2,2,3), 2, 2) %*% inverse # should return the 2x2 identity matrix
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
         i <- x$getinverse()
